@@ -11,7 +11,7 @@ const HomeStack = () => {
   const Stack = createStackNavigator();
   return (
     <Stack.Navigator>
-      <Stack.Screen component={QRFieldListScreen} name="QRFieldList" />
+      <Stack.Screen component={QRFieldListScreen} name="QRFieldList"  />
       <Stack.Screen component={ScanQRCodeScreen} name="ScanQRCode" />
     </Stack.Navigator>
   );

@@ -17,6 +17,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Dialog, PaperProvider, Portal} from 'react-native-paper';
+import QRField from '../components/QRField';
 
 interface Props {
   route: any;
@@ -25,7 +26,6 @@ interface Props {
 
 const QRFieldListScreen = ({route, navigation}: Props) => {
   const [visible, setVisible] = React.useState(false);
-  const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
   const onPressScan = () => {
@@ -57,65 +57,31 @@ const QRFieldListScreen = ({route, navigation}: Props) => {
   return (
     <PaperProvider>
       <View style={{marginRight: 10, marginLeft: 10, paddingTop: 20}}>
-        {/* <Button
-          onPress={showDialog}
-          title="
-          Show dialog"
-        /> */}
         <Portal>
           <Dialog visible={visible} onDismiss={hideDialog}>
-            <Dialog.Title>Alert</Dialog.Title>
+            <Dialog.Title>QR Code Scanner</Dialog.Title>
             <Dialog.Content>
-              <Text variant="bodyMedium">
-                {isExist ? `QR code is exist` : `QR code is added`}
-              </Text>
+              <Text>{isExist ? `QR code is already exist!!` : `QR code added successfully!!`}</Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={hideDialog} color="#841584" title="Done" />
+              <Button onPress={hideDialog} color="#841584" title="Cancel" />
             </Dialog.Actions>
           </Dialog>
         </Portal>
         <View style={{marginBottom: 20}}>
-          <Text style={{fontSize: 28, fontWeight: 700}}>QR Code Lists</Text>
+          <Text style={{fontSize: 28, fontWeight: 700} as any}>QR Code Lists</Text>
         </View>
         <View style={{marginBottom: 20}}>
           <Button
             onPress={onPressScan}
             title="Scan QR Code"
             color="#841584"
-            accessibilityLabel="Learn more about this purple button"
           />
         </View>
         <ScrollView>
           <View style={{marginBottom: 20}}>
             {QRList.map((qrItem, qrIndex) => (
-              <View
-                key={qrItem}
-                style={{
-                  backgroundColor: '#e7dfdf',
-                  padding: 20,
-                  marginBottom: 10,
-                  borderRadius: 10,
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: '#841584',
-                    fontWeight: 500,
-                    maxWidth: '80%',
-                  }}>
-                  {qrItem}
-                </Text>
-                <TouchableOpacity>
-                  <Image
-                    style={{width: 30, height: 30}}
-                    source={require('../assets/icons/deleteIcon.png')}
-                  />
-                </TouchableOpacity>
-              </View>
+              <QRField key={`${qrItem} + ${qrIndex}`} QRList ={QRList} setQRList= {setQRList} qrItem={qrItem} />
             ))}
           </View>
         </ScrollView>
